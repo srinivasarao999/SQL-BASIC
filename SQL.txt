@@ -1,0 +1,207 @@
+SQL
+
+
+
+#creating database
+CREATE DATABASE VIT; 
+
+#creating table 
+CREATE TABLE STUDENTS  
+values 
+ (   
+    STUDENT_ID INT,
+    FIRST_NAME VARCHAR(50),
+    SECOND_NAME VARCHAR(50),
+    CGPA DECIMAL(3,2),
+    DOB DATE
+);
+
+#Adding column to table
+ALTER TABLE STUDENTS
+ADD ADDRESS VARCHAR(500);
+select * from students;# to check
+
+
+#rename the column in table
+ALTER TABLE STUDENTS
+RENAME column ADDRESS TO phone_number;
+
+
+#modify char 
+ALTER TABLE students
+MODIFY COLUMN phone_number INT(10);
+
+
+# moving column position 
+ALTER TABLE students
+MODIFY COLUMN phone_number INT(10)
+AFTER CGPA;
+SELECT * FROM students;
+
+#Droping the table 
+ALTER TABLE students
+DROP COLUMN phone_number;
+SELECT * FROM students;
+
+
+#Adding values into the table
+insert into students
+values
+(1077,'srinivas','rao',8.2,'2002-09-10'),
+(1161,'raj','rao',8.3,'2002-09-11'),
+(1120,'sarath','RAO',8.5,'2002-09-14');    
+
+
+#selecting values from table 
+#selecting particular column in table
+select first_name
+from students
+#selecting particular values
+select *
+from students where student_id =1
+#selecting null values
+SELECT * FROM students WHERE first_name is NULL;
+
+
+#UPDATE AND DELETE(UPDATE AND DELETE OCCURS TO ENTITE COLUMN)
+
+UPDATE STUDENTS
+SET CGPA = 8.25
+WHERE STUDENT_ID = 1;
+SELECT * FROM students;
+
+DELETE FROM STUDENTS
+WHERE STUDENT_ID = 1;
+SELECT * FROM students;
+
+#unique key(like no same value in same column) 
+alter table users
+add constraint
+unique (student_id);
+
+CREATE TABLE STUDENTS (   
+    STUDENT_ID INT,
+    FIRST_NAME VARCHAR(50) unique,
+    SECOND_NAME VARCHAR(50),
+    CGPA DECIMAL(3,2),
+    DOB DATE
+);
+
+
+
+#NOT null
+alter table users 
+modify student_id INT not null;
+
+#CHECK (checking whether the inserting values is under constraint)
+alter table users 
+add constraint student_id 
+check (student_id >1000);
+
+
+alter table users 
+drop check student_id
+
+#default(to fill the default values)
+alter table users
+alter cgpa set default 0; 
+	
+#primary keys(unique keys and not null ,only one primary in table)
+alter table users
+add constraint
+primary key (student_id);
+
+#creating table 
+CREATE TABLE STUDENTS 
+values (   
+    STUDENT_ID INT primary key,
+    FIRST_NAME VARCHAR(50),
+    SECOND_NAME VARCHAR(50),
+    CGPA DECIMAL(3,2),
+    DOB DATE
+);
+
+#auto increament
+
+alter table users
+auto increment =100
+
+#creating table 
+CREATE TABLE STUDENTS 
+values (   
+    STUDENT_ID INT primary key auto increment,
+    FIRST_NAME VARCHAR(50),
+    SECOND_NAME VARCHAR(50),
+    CGPA DECIMAL(3,2),
+    DOB DATE
+);
+
+
+#FOREIGN KEY (this is column which is same between two tables)
+ ALTER TABLE TRANSACTIONS
+ FOREIGN KEY (STUDENT_ID) REFERENCES USERS(STUDENT_ID)
+
+
+
+#INNER JOINT
+SELECT *
+FROM TRASACTIONS INNER JOIN USERS
+ON TRASACTIONS.STUDENT_ID = USERS.STUDENT_ID;
+
+SELECT NAME,CGPA,AMOUNT(FOR PARTICULAR COLOUMNS)
+FROM TRASACTIONS INNER JOIN USERS
+ON TRASACTIONS.STUDENT_ID = USERS.STUDENT_ID;
+
+# LEFT JOINT
+SELECT *
+FROM TRASACTIONS LEFT JOIN USERS
+ON TRASACTIONS.STUDENT_ID = USERS.STUDENT_ID;
+
+#FUNCTIONS
+COUNT - SELECT COUNT(STUDENT_ID) FROM USERS;
+AVG- SELECT AVG(STUDENT_ID) FROM USERS;
+COMBINIBG - SELECT CONCAT(FIRST_NAME," ",LAST_NAME) FROM USERS;
+
+#AND OPERATIONS
+SELECT * FROM USERS 
+WHERE CGPA<= 7.00 AND DATE_OF_BIRTH >= 2002-09-10;
+
+# whild card entry (To find the particular value,how many times it repeats)
+select * from users
+where name like "s%"; 
+where name like "%s"; 
+where name like "_a_";(raj)
+
+#orderbyclass
+select * from users
+order by student_id;
+
+select * from users
+order by student_id desc;
+
+#limit clause
+select * from users
+limit student_id 5;(first 5)
+limit student_id 2 desc(last 2)
+limit stdent_id 3,2;(skip first 3 rows and display next 2)
+
+#union(combining two tables when same number of column)
+select * from users
+union
+select * from transactions
+union all (add duplicates also)
+
+#views(virtual table made from original table)
+create view as student_attendence
+as cgpa 
+from users;
+
+#indexes(indexes are used to identify column easily from large data)
+select sum(amount), student_id
+from trasactions
+group by student_id; 
+
+#grouop up(adding another column by sum)  
+
+
+	
